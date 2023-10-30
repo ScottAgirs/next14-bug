@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* :root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+} */
+
+/* TEMP - Custom color fallbacks */
+.bg-surface {
+  background-color: white;
+}
+.bg-background {
+  background-color: beige;
+}
+
+/* These nested layers require 'tailwindcss/nesting' plugin in postcss.config.js */
+/* Although, currently all seems to be working fine without the plugin. */
+@layer utilities {
+  @layer responsive {
+    .masonry {
+      column-gap: 1.5em;
+      column-count: 1;
+    }
+
+    .masonry-sm {
+      column-gap: 1.5em;
+      column-count: 2;
+    }
+
+    .masonry-md {
+      column-gap: 1.5em;
+      column-count: 3;
+    }
+
+    .break-inside {
+      break-inside: avoid;
+    }
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+/* :where(html,body) { */
+  /* padding-bottom: 24px; */
+  /* height: 100%; - disabled as the 100% is conflicting with iOS fix of "overflow: visible" defined below to enable apple-status-bar overflow */
+/* } */
+
+#__next {
+  min-height: 100vh;
+}
+
+html {
+  @apply bg-teal-900/90;
+  max-width: 100vw;
+  overflow: visible; /* This allows the content to overflow in iOS status bar. */
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:root {
+  --max-width: 100%;
+  --border-radius: 12px;
+
+  --color-accent: 31,178,166;
+  --color-background: 215,229,243;
+  --color-error: 194,5,76;
+  --color-info: 56,184,240;
+  --color-input-background: 255, 255, 255;
+  --color-neutral: 122,127,140;
+  --color-primary: 241,137,90;
+  --color-ring: 51,54,68;
+  --color-secondary: 242,19,104;
+  --color-success: 90,206,107;
+  --color-surface: 255, 255, 255;
+  --color-text: 51,54,68;
+  --color-warning: 255,181,92;
+}
+
+/* Looks like order (@media vs data-theme matters here) */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-accent: 31,178,166;
+    --color-background: 0,16,0;
+    --color-error: 194,5,76;
+    --color-info: 56,184,240;
+    --color-input-background: 39,39,65;
+    --color-neutral: 122,127,140;
+    --color-primary: 214,115,62;
+    --color-ring: 51,54,68;
+    --color-secondary: 242,19,104;
+    --color-success: 90,206,107;
+    --color-surface: 26,38,24;
+    --color-text: 189,217,242;
+    --color-warning: 255,181,92;
+  }
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+--color-accent: 31,178,166;
+  --color-background: 0,16,0;
+  --color-error: 194,5,76;
+  --color-info: 56,184,240;
+  --color-input-background: 39,39,65;
+  --color-neutral: 122,127,140;
+  --color-primary: 214,115,62;
+  --color-ring: 51,54,68;
+  --color-secondary: 242,19,104;
+  --color-success: 90,206,107;
+  --color-surface: 26,38,24;
+  --color-text: 189,217,242;
+  --color-warning: 255,181,92;
+}
+
+/* Hack to round qr reader canvas overflow, otherwise sharp corners, overflow-hidden doesn't seem to work. */
+#qr-shaded-region {
+  @apply rounded-2xl;
+}
+
+/* Buttons */
+.btn {
+  @apply inline-flex items-center tracking-wider active:scale-95 active:shadow-md text-center justify-center;
+}
+.card {
+  /* @apply bg-surface rounded-xl shadow-lg p-4; */
+  @apply rounded-xl shadow-lg p-4;
+}
+
+/* Layouts */
+
+.boxed {
+  @apply max-w-4xl mx-auto px-4 w-11/12;
+}
+
+/* Inputs */
+input, textarea, select {
+  @apply tracking-wide;
+}
+/* Unclear why need to manually override Tailwind classes to prevent the blue ring in TextAreaAutosize */
+input:focus, textarea:focus, select:focus {
+  /* @apply ring-text border-border; */
+}
+label {
+  font-size: 0.75rem;
+  text-align: left;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* Pseudo things */
+::selection {
+  background: rgb(var(--color-primary));
+  color: white;
+  -webkit-text-fill-color: white !important;
+}
+
+/* Prevent auto-zoom on mobile */
+@media only screen and (max-width: 620px) {
+  input,
+  textarea,
+  select {
+    font-size: 1rem !important;
+  }
+}
+
+/* On iOS removes the border when loading image - This seems to be resolved
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+  img[loading="lazy"] {
+    clip-path: inset(0.6px);
+  }
+}
+ */
