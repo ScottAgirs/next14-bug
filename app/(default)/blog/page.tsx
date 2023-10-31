@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
-import { Suspense } from 'react';
+// import { Suspense } from 'react';
 
-import { PostGrid } from '@/app/components/posts/PostGrid';
+// import { PostGrid } from '@/app/components/posts/PostGrid';
 import { playfair } from '@/lib/fonts';
 
 export const metadata: Metadata = {
@@ -25,9 +25,10 @@ export default async function Page({
         <h1 className={`${playfair.className} text-2xl`}>Blog</h1>
       </div>
 
-      <Suspense key={query + currentPage} fallback={'Blog skeleton'}>
+      <h2>Blog</h2>
+      {/* <Suspense key={query + currentPage} fallback={'Blog skeleton'}>
         <PostGrid query={query} currentPage={currentPage} />
-      </Suspense>
+      </Suspense> */}
     </div>
   );
 }
