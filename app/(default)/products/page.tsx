@@ -1,9 +1,7 @@
 import { Metadata } from 'next';
-// import { Suspense } from 'react';
+import { Suspense } from 'react';
 
-// import { ProductsList } from '@/app/components/products/ProductsList';
-import { ProductsListDumb } from '@/app/components/products/ProductsListDumb';
-import { fetchProducts } from '@/lib/db';
+import { ProductsList } from '@/app/components/products/ProductsList';
 import { playfair } from '@/lib/fonts';
 
 export const metadata: Metadata = {
@@ -20,7 +18,6 @@ export default async function ProductsPage({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const products = await fetchProducts(query);
 
   return (
     <div className="w-full">
@@ -30,10 +27,9 @@ export default async function ProductsPage({
 
       <h2>ProductsList</h2>
 
-      <ProductsListDumb products={products} />
-      {/* <Suspense key={query + currentPage} fallback={'Blog skeleton'}>
+      <Suspense key={query + currentPage} fallback={'Products skeleton'}>
         <ProductsList query={query} currentPage={currentPage} />
-      </Suspense> */}
+      </Suspense>
     </div>
   );
 }
